@@ -3,9 +3,9 @@ services:
   rails: &app-base
     build:
       context: .
-      dockerfile: build/development.Dockerfile
+      dockerfile: build/production.Dockerfile
       args:
-        RAILS_ENV: development
+        RAILS_ENV: production
     command: bundle exec rails server -b 0.0.0.0 -p '3000'
     ports:
       - '3000:3000'
@@ -14,25 +14,11 @@ services:
     environment:
       LANG: 'C.UTF-8'
       POSTGRES_HOST: db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      RAILS_ENV: development
-      SPRING_SOCKET: 'tmp/pids/spring.sock'
-      SPRING_SERVER_COMMAND: 'build-compose up spring'
+      RAILS_ENV: production
     env_file:
       - secrets.env
-    volumes:
-      - .:/rails_app
-      - bundle-data:/usr/local/bundle
     stdin_open: true
     tty: true
-
-
-  spring:
-    <<: *app-base
-    ports: []
-    command: bundle exec spring server
-    pid: host
 
 
   db:
@@ -40,13 +26,12 @@ services:
     ports:
       - '5432:5432'
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
       PGDATA: /var/lib/postgresql/data
+    env_file:
+      - secrets.env
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
 
 volumes:
-  bundle-data: {}
   postgres-data: {}
