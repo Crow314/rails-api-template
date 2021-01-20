@@ -16,6 +16,12 @@ gem 'redis', '~> 4.0'
 gem 'redis-namespace', '~> 1.6'
 # Use ridgepole for schema management
 gem 'ridgepole', '~> 0.8'
+# Simple, efficient background processing for Ruby
+gem 'sidekiq', '~> 6.1'
+# adds support for queueing jobs in a recurring way to sidekiq
+gem 'sidekiq-scheduler', '~> 3.0'
+# An extension to the sidekiq message processing to track your jobs
+gem 'sidekiq-status', '~> 1.1'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 # Use Active Storage variant
@@ -27,6 +33,8 @@ gem 'rack-cors'
 
 # Use Pry as rails console
 gem 'pry-rails', '~> 0.3'
+# Manage multi-environment settings
+gem 'config', '~> 2.2'
 # Make managing seeds better
 gem 'seed-fu', '~> 2.3'
 

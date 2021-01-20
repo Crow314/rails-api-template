@@ -11,14 +11,22 @@ services:
       - '3000:3000'
     depends_on:
       - db
+      - redis
     environment:
       LANG: 'C.UTF-8'
-      POSTGRES_HOST: db
       RAILS_ENV: production
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
     env_file:
       - secrets.env
     stdin_open: true
     tty: true
+
+
+  worker:
+    <<: *app-base
+    ports: []
+    command: bundle exec sidekiq -C config/sidekiq.yml
 
 
   db:
@@ -33,5 +41,15 @@ services:
       - postgres-data:/var/lib/postgresql/data
 
 
+  redis:
+    image: redis:5.0.7-alpine
+    ports:
+      - '6379:6379'
+    command: [redis-server, --loglevel, notice]
+    volumes:
+      - redis-data:/data
+
+
 volumes:
   postgres-data: {}
+  redis-data: {}

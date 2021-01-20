@@ -13,7 +13,7 @@
 - `setup.sh` を叩く
     - 記述されているコマンドを手動で実行してもいい
 - `master.key`再生成
-  1. `docker-compose run -e EDITOR=vi --rm rails bin/rails credentials:edit`
+  1. `:q`
   2. 特に何も変更せずに閉じる `:q`
   
 ## 本番環境
